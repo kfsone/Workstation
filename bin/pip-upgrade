@@ -1,0 +1,75 @@
+#! /bin/bash
+# Upgrade all installed pip packages
+#
+
+# Allow user to override which pip we use, e.g.
+# PIP=pip3 pip-upgrade
+#
+PIP="${PIP:-pip}"
+
+# Do we need to use 'SUDO' to install system packages?
+if [ "${USER}" != "root" ]; then SUDO_CMD="sudo -H"; else SUDO_CMD=""; fi
+
+function get_out_of_date () {
+  out_of_date=$(${PIP} list --format=columns -o $* | awk '{print $1}')
+}
+
+get_out_of_date
+if [ -z "${out_of_date}"]; then
+  echo "++ No packages to upgrade".
+  exit 0
+fi
+
+if [ -n "${VIRTUAL_ENV}" ]; then
+  echo "++ virtual environment upgrade."
+  ${PIP} install --upgrade ${out_of_date} || exit 1
+  exit 0
+fi
+
+if [ " $out_of_date " =~ ' pip ' ]; then
+  $SUDO_CMD $PIP install --upgrade pip
+
+  # refresh the out-of-date list.
+  get_out_of_date
+  if [ -z "${out_of_date}"]; then
+    exit 0
+  fi
+fi
+
+# Upgrade user packages
+get_out_of_date --user
+if [ -n "${out_of_date}" ]; then
+  echo "++ User packages are up-to date"
+else
+  # Install direct targets first.
+  get_out_of_date --user --not-required
+  for package in ${out_of_date}; do
+    echo "-- ${package}"
+    $PIP install --user --upgrade ${package} || exit 1
+  done
+
+  # Check for remaining packages
+  get_out_of_date --user
+  for package in ${out_of_date:-}; do
+    echo "-+ ${package}"
+    $PIP install --user --upgrade ${package} || exit 1
+  done
+fi
+
+# Check for system packages.
+get_out_of_date
+if [ -n "${out_of_date}" ]; then
+  echo "++ System packages are up-to date"
+else
+  get_out_of_date --not-required
+  for package in ${out_of_date}; do
+    echo "-- ${package}"
+    $SUDO $PIP install --upgrade ${package} || exit 1
+  done
+
+  get_out_of_date
+  for package in ${out_of_date}; do
+    echo "-+ ${package}"
+    $SUDO $PIP install --upgrade ${package} || exit 1
+  done
+fi

@@ -1,0 +1,3 @@
+[submodule "etc/Powershell.rc.d"]
+	path = etc/Powershell.rc.d
+	url = git@github.com:/kfsone/Powershell.rc.d.git

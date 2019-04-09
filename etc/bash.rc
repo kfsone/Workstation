@@ -1,0 +1,37 @@
+# -*- coding: utf8 -*-
+# vim:fileencoding=utf8
+# Bash Fragment: Oliver 'kfs1' Smith's main bash profile.
+
+# If a machine-local profile exists, execute it first.
+if [ -f "${HOME}/etc/profile" ]; then
+	. "${HOME}/etc/profile"
+fi
+
+# Location of the workstation directory.
+for path in "${HOME}" "${HOME}/.local" "${HOME}/etc" "/opt"; do
+	if [ -n "${WSHOME:-}" ]; then break; fi
+	for name in "Workstation" ".Workstation" "workstation" ".workstation"; do
+		if [ -d "${path}/${name}" ]; then
+			export WSHOME="${path}/${name}"
+		fi
+	done
+done
+
+if [ -z "${WSHOME}" ]; then
+	echo "ERROR: Could not find workstation folder"
+else
+
+	# Import my various shell utilities
+	. "${WSHOME}/lib/shell-utils.sh"
+
+	# Execute any scripts that are installed in the bash.rc.d folder
+	rc_dir="${WSHOME}/etc/bash.rc.d"
+	if [ -d "${rc_dir}" ]; then
+		for file in "${rc_dir}"/*.rc; do
+			. "${file}"
+		done
+	fi
+
+	# If there is a machine-local bashrc extension, execute it
+	source_if_exists "${HOME}/etc/bashrc"
+fi

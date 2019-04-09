@@ -1,0 +1,19 @@
+vim vim-scripts vim-editorconfig vim-doc
+tmux mosh
+git git-extras git-core
+make cmake ninja-build autoconf automake binutils libtool ctags
+    gnu-standards autoconf-doc cpp-doc gcc-doc glibc-doc libtool-doc make-doc
+    binutils-doc
+flex bison bison-doc flex-doc
+gdb gdb-doc
+python  python-pip  python-virtualenv  cython  cython-doc python-doc
+    python-setuptools python-examples
+    swig 
+python3 python3-pip python3-virtualenv cython3 pkg-config libsystemd-dev
+virtualenv
+ipython ipython3
+python-dev python-yaml libssl-dev libffi-dev libicu-dev libusb-1.0-0
+man
+powerline python-powerline
+
+
