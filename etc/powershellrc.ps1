@@ -26,9 +26,9 @@ if (!$WSHome) {
 		ForEach ($path in "${HOME}","${HOME}/.local","$env:LOCAL_APPDATA") {
 			if ($path) {
 				ForEach ($folder in "Workstation",".Workstation") {
-					$local:home = Join-Path $path $folder
-					if (Test-Path "${local:home}") {
-						$WSHome = $local:home
+					$candidate = Join-Path $path $folder
+					if (Test-Path "${candidat}") {
+						$WSHome = $candidate
 						break
 					}
 				}
