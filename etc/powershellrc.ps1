@@ -27,7 +27,7 @@ if (!$WSHome) {
 			if ($path) {
 				ForEach ($folder in "Workstation",".Workstation") {
 					$candidate = Join-Path $path $folder
-					if (Test-Path "${candidat}") {
+					if (Test-Path "${candidate}") {
 						$WSHome = $candidate
 						break
 					}
