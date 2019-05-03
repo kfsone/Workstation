@@ -57,3 +57,10 @@ if (Resolve-Path $KfsoneRC -ErrorAction SilentlyContinue) {
     . $Loader
   }
 }
+
+Get-ChildItem (Join-Path $HOME etc) -Filter *.rc.ps1 | ForEach { 
+  $Script = $_.FullName
+  Write-Host "++ Running ${Script}"
+  . $Script
+}
+
