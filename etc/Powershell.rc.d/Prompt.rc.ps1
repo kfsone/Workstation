@@ -2,7 +2,9 @@
 # Change prompt to be two lines.
 #
 Function Prompt {
-  "[$($executionContext.SessionState.Path.CurrentLocation)]`r`n$('>' * ($nestedPromptLevel + 1)) "
+  $location = "[$($executionContext.SessionState.Path.CurrentLocation)]"
+  Write-Host -Background 1 -Foreground 7 "${location}`r"
+  "$('>' * ($nestedPromptLevel + 1)) "
   # .Link# http://go.microsoft.com/fwlink/?LinkID=225750
   # # .ExternalHelp System.Management.Automation.dll-help.xml
 }
