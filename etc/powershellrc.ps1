@@ -16,31 +16,31 @@
 $ChocoRC = "${HOME}/etc/chocolateyrc.ps1"
 if (Resolve-Path $ChocoRC -ErrorAction SilentlyContinue) {
   Write-Host "-- Loading ChocoRC"
-	. $ChocoRC
+  . $ChocoRC
 }
 
 
 # Locate the "Workstation home"
 if (!$WSHome) {
-	if ($env:WSHOME -And (Test-Path "$env:WSHOME")) {
-		$WSHome = $env:WSHOME
-	} else {
-		ForEach ($path in "${HOME}","${HOME}/.local","$env:LOCAL_APPDATA") {
-			if ($path) {
-				ForEach ($folder in "Workstation",".Workstation") {
-					$candidate = Join-Path $path $folder
-					if (Test-Path "${candidate}") {
-						$WSHome = $candidate
-						break
-					}
-				}
-				if ($WSHome) { break }
-			}
-		}
-		if (!$WSHome) {
-			Throw "Could not locate `$WSHome Workstation folder"
-		}
-	}
+  if ($env:WSHOME -And (Test-Path "$env:WSHOME")) {
+    $WSHome = $env:WSHOME
+  } else {
+    ForEach ($path in "${HOME}","${HOME}/.local","$env:LOCAL_APPDATA") {
+      if ($path) {
+        ForEach ($folder in "Workstation",".Workstation") {
+          $candidate = Join-Path $path $folder
+          if (Test-Path "${candidate}") {
+            $WSHome = $candidate
+            break
+          }
+        }
+        if ($WSHome) { break }
+      }
+    }
+    if (!$WSHome) {
+      Throw "Could not locate `$WSHome Workstation folder"
+    }
+  }
 }
 $env:WSHOME = [String]$WSHome
 Write-Host "== WSHome: $WSHome"
