@@ -1,11 +1,7 @@
-[CmdletBinding(SupportsShouldProcess = $true)]
-Param([String] $ScriptPath=$PSScriptRoot)
+$ScriptPath = Join-Path $WSHOME etc/Powershell.rc.d
 
-$pscmdlet.WriteVerbose("Searching $ScriptPath for .rc.ps1 scripts")
-Get-ChildItem $ScriptPath -File -Filter *.rc.ps1 | ForEach {
+Get-ChildItem $ScriptPath -File *.rc.ps1 | ForEach {
   $script = $_.FullName
-	if ($pscmdlet.ShouldProcess($script, "Source")) {
-    Write-Host "-- + $script"
-		. $script
-	}
+  Write-Host "-- + $script"
+  . $script
 }
