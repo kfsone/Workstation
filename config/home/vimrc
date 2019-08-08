@@ -22,7 +22,7 @@ set wildmenu
 " I like '[' mapped to 'next warning/error/grep result', so
 " I can skip thru search results or compile errors quickly.
 "
-nnoremap [ :cn<CR>
+nnoremap = :cn<CR>
 
 """" DISPLAY
 set background=dark 
