@@ -1,0 +1,8 @@
+# These are all commands that can be executed regardless of shell.
+
+Ensure-Dir ~/etc
+
+cp config/home/vimrc ~/.vimrc
+git config --global user.email 'oliver@kfs.org'
+git config --global user.name "Oliver 'kfsone' Smith"
+
