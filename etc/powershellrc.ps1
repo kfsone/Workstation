@@ -58,17 +58,10 @@ if (Resolve-Path $KfsoneRC -ErrorAction SilentlyContinue) {
   }
 }
 
-<<<<<<< HEAD
-Get-ChildItem (Join-Path $HOME etc) -Filter *.rc.ps1 | ForEach { 
-  $Script = $_.FullName
-  Write-Host "++ Running ${Script}"
-  . $Script
-=======
 Add-Path -File ~/etc/extra-paths.cfg -ErrorAction SilentlyContinue
 
 $LocalRC = "${HOME}/etc/localpowershellrc.ps1"
 if (Resolve-Path $LocalRC -ErrorAction SilentlyContinue) {
   . $LocalRC
->>>>>>> Mac fixes
 }
 
