@@ -1,23 +1,25 @@
-if ($IsWindows) {
-  $env:GOROOT="C:\Go"
-  [Environment]::SetEnvironmentVariable("GOROOT", $env:GOROOT, "User")
-  Write-Host "Setting GOROOT to ${env:GOROOT}"
-} else {
-  if (!$env:GOROOT) {
-    $env:GOROOT = "/usr/local/go"
+if (!$env:GOROOT) {
+  if (!$IsLinux) {
+    $env:GOROOT="C:\Go"
+  } else {
+	$env:GOROOT = "/usr/local/go";
   }
-  [Environment]::SetEnvironmentVariable("GOROOT", $env:GOROOT, "User")
-  Write-Host "Setting GOROOT to ${env:GOROOT}"
+  if (Test-Path $env:GOROOT) {
+    Write-Host "Setting GOROOT to ${env:GOROOT}"
+    [Environment]::SetEnvironmentVariable("GOROOT", $env:GOROOT, "User")
+  }
 }
 
-if (! $env:GOPATH) {
+if (!$env:GOPATH) {
   $env:GOPATH = Join-Path "${HOME}" "go"
-  [Environment]::SetEnvironmentVariable("GOPATH", $env:GOPATH, "User")
-  Write-Host "Setting GOPATH to ${env:GOPATH}"
+  if (Test-Path $env:GOPATH) {
+    Write-Host "Setting GOPATH to ${env:GOPATH}"
+    [Environment]::SetEnvironmentVariable("GOPATH", $env:GOPATH, "User")
+  }
 }
 
 # Where my personal projects are kept
-$env:GOBASE = "github.com/kfsone"
+$env:GOBASE = Join-Path "github.com" "kfsone"
 
 Function GoCD {
   Param([string] $Project = $env:GOBASE)
