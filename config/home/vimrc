@@ -67,3 +67,17 @@ augroup configgroup
     autocmd FileType *.cpp,*.h,*.java,*.go              setlocal ts=4 sw=4 noexpandtab number colorcolumn=120
 augroup END
 
+function! GitGrep(...)
+    let cmd = "git grep -n --column " . join(a:000, " ")
+    set efm=%f:%l:%c:%m
+    cexpr system(cmd)
+endfunction
+
+command! -nargs=+ Ggrep :call GitGrep(<f-args>)
+
+function! Ninja(...)
+	let cmd = "ninja " . join(a:000, " ")
+	cexpr system(cmd)
+endfunction
+
+command! -nargs=+ Ninja :call Ninja(<f-args>)
