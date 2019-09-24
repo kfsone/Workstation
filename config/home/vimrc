@@ -60,7 +60,7 @@ augroup configgroup
     "autocmd FileType c,cpp,python,*.sh,.vimrc,.bashrc,*.xml,shell,html,go,txt,json,yaml,md,powershell,ps1,*.ps1 autocmd BufWritePre <buffer> %s/\s\+$//e
 
     " tabs vs spaces
-    autocmd FileType python,vim,shell                   setlocal ts=4 sw=4 expandtab number colorcolumn=100colorcolumn=120
+    autocmd FileType python,vim,shell                   setlocal ts=4 sw=4 expandtab number colorcolumn=100 colorcolumn=120
     autocmd FileType vim                                setlocal noexpandtab
     autocmd FileType powershell,ps1,*.ps1,pm1,*.pm1     setlocal ts=2 sw=2 expandtab number colorcolumn=100 colorcolumn=120
     autocmd FileType powershell,ps1,*.ps1               setlocal ts=2 sw=2 expandtab number colorcolumn=100 colorcolumn=120
