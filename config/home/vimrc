@@ -5,6 +5,11 @@
 "
 set ts=4 sw=4 ai smarttab smartindent backspace=2
 set encoding=utf-8
+" write files automatically on :make
+set autowrite
+
+let g:go_test_timeout = '15s'
+let mapleader = ","
 
 " Enable file-type recognition and syntax highlighting.
 "
@@ -65,6 +70,13 @@ augroup configgroup
     autocmd FileType powershell,ps1,*.ps1,pm1,*.pm1     setlocal ts=2 sw=2 expandtab number colorcolumn=100 colorcolumn=120
     autocmd FileType powershell,ps1,*.ps1               setlocal ts=2 sw=2 expandtab number colorcolumn=100 colorcolumn=120
     autocmd FileType c,cpp,java,go                      setlocal ts=4 sw=4 noexpandtab number colorcolumn=100
+
+	autocmd FileType go setlocal ff=unix
+	autocmd FileType go	nmap <leader>b :call GBuild() <CR>
+	autocmd FileType go	nmap <leader>r :call GRun() <CR>
+	autocmd FileType go	nmap <leader>t :call GTest() <CR>
+	autocmd FileType go setlocal makeprg=go\ test\ ./...
+augroup END
 augroup END
 
 function! GitGrep(...)
@@ -81,3 +93,15 @@ function! Ninja(...)
 endfunction
 
 command! -nargs=+ Ninja :call Ninja(<f-args>)
+
+function! GBuild()
+	cexpr system("go build .")
+endfunction
+
+function! GTest()
+	cexpr system("go test ./...")
+endfunction
+
+function! GRun()
+	cexpr system("go run ./...")
+endfunction

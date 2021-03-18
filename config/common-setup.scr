@@ -5,4 +5,5 @@ Ensure-Dir ~/etc
 cp config/home/vimrc ~/.vimrc
 git config --global user.email 'oliver@kfs.org'
 git config --global user.name "Oliver 'kfsone' Smith"
+git config --global core.gitattributes ~/Workstation/etc/gitattributes
 
