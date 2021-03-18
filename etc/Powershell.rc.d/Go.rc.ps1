@@ -1,6 +1,10 @@
 if (!$env:GOROOT) {
   if (!$IsLinux) {
-    $env:GOROOT="C:\Go"
+    if (Test-Path "C:/Program Files/Go") {
+      $env:GOROOT="C:/Program Files/Go"
+    } else {
+      $env:GOROOT="C:\Go"
+    }
   } else {
 	$env:GOROOT = "/usr/local/go";
   }
@@ -30,9 +34,13 @@ Function GoCD {
   }
   Set-Location -ErrorAction Stop src
   if ($Project -NE $env:GOBase) {
-    $myproj = Join-Path $env:GOBASE $Project
-    if (Test-Path $myproj) {
-      $Project = $myproj
+    $candidates = $env:GOBASE,"nibble.home.kfs.org","nibble.home.kfs.org/oliver","nibble.home.kfs.org","github.com"
+    foreach ($c in $candidates) {
+      $candidate = Join-Path $c $Project
+      if (Test-Path $candidate) {
+        $Project = $candidate
+        break
+      }
     }
   }
   Set-Location -ErrorAction Stop $Project
