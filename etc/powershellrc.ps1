@@ -15,7 +15,7 @@
 # script is present, run it.
 $ChocoRC = "${HOME}/etc/chocolateyrc.ps1"
 if (Resolve-Path $ChocoRC -ErrorAction SilentlyContinue) {
-  Write-Host "-- Loading ChocoRC"
+  if ($VerboseWorkstation) { Write-Host "-- Loading chocorc" }
   . $ChocoRC
 }
 
@@ -43,13 +43,13 @@ if (!$WSHome) {
   }
 }
 $env:WSHOME = [String]$WSHome
-Write-Host "== WSHome: $WSHome"
+if ($VerboseWorkstation) { Write-Host "== WSHome: $WSHome" }
 
 # If the kfsone powershell rc directory is present, invoke the loader.
 $KfsoneRC = "${WSHOME}/etc/Powershell.rc.d/LOADER.ps1"
 if (Resolve-Path $KfsoneRC -ErrorAction SilentlyContinue) {
   # Run the scripts
-  Write-Host "-- Running KfsoneRC"
+  if ($VerboseWorkstation) { Write-Host "-- Running KfsoneRC" }
   . $KfsoneRC
 
   # Define a function to make it easy to reload the scripts
