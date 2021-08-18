@@ -2,7 +2,6 @@
 if (-not $env:GITHUB_ROOT) {
   foreach ($path in "dev","src","Projects","Dev","Development") {
     $github = Join-Path $HOME $path
-    echo "testing $github"
     if (Test-Path (Join-Path $github "github.com" "kfsone")) {
       $env:GITHUB_ROOT = $github
       break
