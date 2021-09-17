@@ -1,3 +1,8 @@
+Param(
+  [String]
+  $DefaultScript = (Join-Path "config" "common-setup.scr")
+)
+
 Function Ensure-Dir {
 	Param([Parameter(Mandatory = $true)][String] $Path)
 
@@ -6,10 +11,4 @@ Function Ensure-Dir {
 	}
 }
 
-$scriptSrc = "./config/common-setup.scr"
-$scriptPs1 = "./config/common-setup.ps1"
-
-mv $scriptSrc $scriptPs1
-& $scriptPs1
-mv $scriptPs1 $scriptSrc
-
+Get-Content $DefaultScript | Invoke-Expression
