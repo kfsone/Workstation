@@ -11,4 +11,10 @@ Function Ensure-Dir {
 	}
 }
 
-Get-Content $DefaultScript | Invoke-Expression
+try {
+  $tmpscript = Join-Path $env:TEMP ws.setup.ps1
+  copy $DefaultScript $tmpscript
+  & $tmpscript -ea stop
+} finally {
+  rm $tmpscript
+}
