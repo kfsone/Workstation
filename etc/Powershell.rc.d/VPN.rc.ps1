@@ -15,7 +15,7 @@ function VPN () {
 
   if ($IsWindows) {
     if ($Up) {
-      rasdial "$Network"
+      rasdial "$Network" oliver.smith *
     } else {
       rasdial "$Network" /disconnect
     }
