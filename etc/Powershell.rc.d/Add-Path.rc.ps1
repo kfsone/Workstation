@@ -8,6 +8,11 @@ Function Add-Path() {
 		[String[]] $Paths
 	)
 
+  $PathSep = ':'
+  if ($IsWindows) {
+    $PathSep = ';'
+  }
+
 	# If there exists a local list of paths, add them to the path variable
 	if ($File) {
 		Resolve-Path $File >$nil
@@ -20,15 +25,16 @@ Function Add-Path() {
 	}
 
 	$PathList += $Paths
-	$CurPaths = $env:PATH -Split ':'
+	$CurPaths = $env:PATH -Split $PathSep
 	ForEach ($path in $pathlist) {
 		if (!($path -In $curpaths)) {
 			$pscmdlet.WriteVerbose("Add: $path")
 			$CurPaths += @($path)
 		}
 	}
-	$paths = ($CurPaths -Join ':') -Replace '::+',':'
-	$paths = $paths -Replace '(^:|:$)',''
+  $patn = $PathSep + $PathSep + '+'
+	$paths = ($CurPaths -Join $PathSep) -Replace $patn,$PathSep
+	$paths = $paths -Replace "(^${PathSep}|${PathSep}$)",''
 	if ($paths -Ne $env:PATH) {
 		if ($pscmdlet.ShouldProcess($Paths, "Set Path")) {
 			$env:PATH = $paths
