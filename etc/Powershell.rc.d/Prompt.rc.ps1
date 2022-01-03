@@ -17,7 +17,7 @@ Function Prompt {
   $location = "[$($executionContext.SessionState.Path.CurrentLocation)]"
   $branch = GetGitRev
   if ($branch) { 
-    if ($branch -eq 'master') {
+    if ($branch -eq 'master' -or $branch -eq 'main' -or $branch -eq 'Trunk') {
       $branchtext = "`e[44m:${branch}:`e[0m "
     } else {
       $branchtext = "`e[45m|${branch}|`e[0m "
