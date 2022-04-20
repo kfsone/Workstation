@@ -1,10 +1,17 @@
-*.go text eol=lf
-*.md text eol=lf
-*.py text eol=lf
+[attr]lintext text eol=lf
+[attr]wintext text eol=crlf
+
+*.go   lintext
+*.md   lintext
+*.py   lintext
+*.sh   lintext
+
+*.ps1   lintext
+*.cpp   lintext
+*.h     lintext
+*.txt   lintext
+*.cmake lintext
+
+*.bat   wintext
+
 *.pdf -text
-*.bat text eol=crlf
-*.ps1 text eol=lf
-*.cpp text eol=lf
-*.h   text eol=lf
-*.txt text eol=lf
-*.cmake text eol=lf
