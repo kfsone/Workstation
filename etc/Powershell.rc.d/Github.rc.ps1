@@ -1,6 +1,6 @@
 # Where my personal projects are kept
 if (-not $env:GITHUB_ROOT) {
-  foreach ($path in "dev","src","Projects","Dev","Development") {
+  foreach ($path in "dev","src","source","Source","Projects","Dev","Development") {
     $github = Join-Path $HOME $path
     if (Test-Path (Join-Path $github "github.com" "kfsone")) {
       $env:GITHUB_ROOT = $github
